@@ -9,5 +9,6 @@ org\minejewels\jewelsgens\listeners\BreakListener.class
 org\minejewels\jewelsgens\gen\registry\GeneratorRegistry.class
 org\minejewels\jewelsgens\commands\warptoken\WarpTokenCommand.class
 org\minejewels\jewelsgens\commands\generator\GeneratorCommand.class
+org\minejewels\jewelsgens\JewelsGens$1.class
 org\minejewels\jewelsgens\listeners\InteractListener.class
 org\minejewels\jewelsgens\commands\generator\subcommands\GiveGeneratorSubCommand.class

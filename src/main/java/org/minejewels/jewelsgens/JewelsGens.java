@@ -1,12 +1,16 @@
 package org.minejewels.jewelsgens;
 
+import eu.decentsoftware.holograms.api.DHAPI;
 import lombok.Getter;
 import net.abyssdev.abysslib.command.AbyssCommand;
 import net.abyssdev.abysslib.config.AbyssConfig;
+import net.abyssdev.abysslib.location.LocationSerializer;
 import net.abyssdev.abysslib.patterns.registry.Registry;
 import net.abyssdev.abysslib.plugin.AbyssPlugin;
+import net.abyssdev.abysslib.runnable.AbyssTask;
 import net.abyssdev.abysslib.storage.Storage;
 import net.abyssdev.abysslib.text.MessageCache;
+import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.minejewels.jewelsgens.commands.generator.GeneratorCommand;
 import org.minejewels.jewelsgens.commands.generator.subcommands.GiveGeneratorSubCommand;
@@ -73,8 +77,15 @@ public final class JewelsGens extends AbyssPlugin {
         for (final GeneratorData generatorData : this.generatorStorage.allValues()) {
 
             final Generator generator = this.generatorRegistry.get(generatorData.getGenerator()).get();
-            generator.spawnGenerator(generatorData);
             generatorData.setTask(new GeneratorTask(this, generatorData));
+
+            new AbyssTask<JewelsGens>(this) {
+                @Override
+                public void run() {
+                    final Location newLocation = LocationSerializer.deserialize(generatorData.getLocation()).add(0.5, generator.getYOffset(), 0.5);
+                    DHAPI.createHologram(generatorData.getUuid().toString() + "-GENERATOR", newLocation, false, generator.getHologram());
+                }
+            }.runTaskLater(this, 100L);
         }
     }
 
