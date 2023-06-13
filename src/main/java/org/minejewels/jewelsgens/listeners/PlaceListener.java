@@ -4,6 +4,7 @@ import net.abyssdev.abysslib.listener.AbyssListener;
 import net.abyssdev.abysslib.location.LocationSerializer;
 import net.abyssdev.abysslib.nbt.NBTUtils;
 import net.abyssdev.abysslib.placeholder.PlaceholderReplacer;
+import net.abyssdev.abysslib.team.utils.TeamUtils;
 import net.abyssdev.abysslib.utils.Utils;
 import net.abyssdev.abysslib.utils.WordUtils;
 import org.bukkit.Location;
@@ -49,6 +50,11 @@ public class PlaceListener extends AbyssListener<JewelsGens> {
 
         final Block block = event.getBlockPlaced();
         final Location location = block.getLocation();
+
+        if (!TeamUtils.get().canPlace(player, location)) {
+            this.plugin.getMessageCache().sendMessage(event.getPlayer(), "messages.cannot-place");
+            return;
+        }
 
         if (!this.worlds.contains(location.getWorld().getName())) {
             this.plugin.getMessageCache().sendMessage(player, "messages.blacklisted-world");

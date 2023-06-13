@@ -7,6 +7,7 @@ import net.abyssdev.abysslib.listener.AbyssListener;
 import net.abyssdev.abysslib.location.LocationSerializer;
 import net.abyssdev.abysslib.nbt.NBTUtils;
 import net.abyssdev.abysslib.placeholder.PlaceholderReplacer;
+import net.abyssdev.abysslib.team.utils.TeamUtils;
 import net.abyssdev.abysslib.utils.Utils;
 import net.abyssdev.abysslib.utils.WordUtils;
 import org.bukkit.Location;
@@ -44,6 +45,11 @@ public class InteractListener extends AbyssListener<JewelsGens> {
         for (final GeneratorData generatorData : generatorDataList) {
             if (!generatorData.getLocation().equalsIgnoreCase(LocationSerializer.serialize(location))) continue;
             if (!this.plugin.getGeneratorRegistry().containsKey(generatorData.getGenerator())) continue;
+
+            if (!TeamUtils.get().canInteract(event.getPlayer(), location)) {
+                this.plugin.getMessageCache().sendMessage(event.getPlayer(), "messages.cannot-interact");
+                return;
+            }
 
             final Generator generator = this.plugin.getGeneratorRegistry().get(generatorData.getGenerator()).get();
 
