@@ -3,9 +3,11 @@ package org.minejewels.jewelsgens.commands.generator.subcommands;
 import net.abyssdev.abysslib.command.AbyssSubCommand;
 import net.abyssdev.abysslib.command.context.CommandContext;
 import net.abyssdev.abysslib.placeholder.PlaceholderReplacer;
+import net.abyssdev.abysslib.utils.Utils;
 import net.abyssdev.abysslib.utils.WordUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.eclipse.collections.api.factory.Sets;
 import org.minejewels.jewelsgens.JewelsGens;
 import org.minejewels.jewelsgens.gen.Generator;
@@ -15,7 +17,7 @@ import java.util.Optional;
 public class GiveGeneratorSubCommand extends AbyssSubCommand<JewelsGens> {
 
     public GiveGeneratorSubCommand(final JewelsGens plugin) {
-        super(plugin, 2, Sets.immutable.of("give"));
+        super(plugin, 3, Sets.immutable.of("give"));
     }
 
     @Override
@@ -45,8 +47,19 @@ public class GiveGeneratorSubCommand extends AbyssSubCommand<JewelsGens> {
 
         final Generator generator = optionalGenerator.get();
 
-        player.getInventory().addItem(generator.getItem());
+        if (!Utils.isInteger(String.valueOf(context.asInt(2)))) {
+            this.plugin.getMessageCache().sendMessage(sender, "messages.invalid-number");
+            return;
+        }
 
-        this.plugin.getMessageCache().sendMessage(player, "messages.generator-given", new PlaceholderReplacer().addPlaceholder("%type%", WordUtils.formatText(generator.getIdentifier().toLowerCase().replace("_", " "))));
+        final int amount = context.asInt(2);
+
+        final ItemStack item = generator.getItem();
+
+        item.setAmount(amount);
+
+        player.getInventory().addItem(item);
+
+        this.plugin.getMessageCache().sendMessage(player, "messages.generator-given", new PlaceholderReplacer().addPlaceholder("%amount%", Utils.format(amount)).addPlaceholder("%type%", WordUtils.formatText(generator.getIdentifier().toLowerCase().replace("_", " "))));
     }
 }
