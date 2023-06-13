@@ -1,5 +1,8 @@
 package org.minejewels.jewelsgens.listeners;
 
+import com.plotsquared.core.PlotSquared;
+import com.plotsquared.core.plot.Plot;
+import com.plotsquared.core.plot.PlotArea;
 import com.sun.tools.javac.jvm.Gen;
 import net.abyssdev.abysslib.economy.provider.Economy;
 import net.abyssdev.abysslib.economy.registry.impl.DefaultEconomyRegistry;
@@ -7,9 +10,11 @@ import net.abyssdev.abysslib.listener.AbyssListener;
 import net.abyssdev.abysslib.location.LocationSerializer;
 import net.abyssdev.abysslib.nbt.NBTUtils;
 import net.abyssdev.abysslib.placeholder.PlaceholderReplacer;
+import net.abyssdev.abysslib.plotsquared.PlotSquaredUtils;
 import net.abyssdev.abysslib.team.utils.TeamUtils;
 import net.abyssdev.abysslib.utils.Utils;
 import net.abyssdev.abysslib.utils.WordUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -49,6 +54,28 @@ public class InteractListener extends AbyssListener<JewelsGens> {
             if (!TeamUtils.get().canInteract(event.getPlayer(), location)) {
                 this.plugin.getMessageCache().sendMessage(event.getPlayer(), "messages.cannot-interact");
                 return;
+            }
+
+            if (Bukkit.getPluginManager().getPlugin("PlotSquared") != null) {
+
+                final com.plotsquared.core.location.Location plotLocation = com.plotsquared.core.location.Location.at(location.getWorld().getName(), location.getBlockX(), location.getBlockY(), location.getBlockZ());
+
+                if (PlotSquared.get().getPlotAreaManager().getApplicablePlotArea(plotLocation).getPlot(plotLocation) == null) {
+                    this.plugin.getMessageCache().sendMessage(event.getPlayer(), "messages.cannot-interact");
+                    return;
+                }
+
+                final Plot plot = PlotSquared.get().getPlotAreaManager().getApplicablePlotArea(plotLocation).getPlot(plotLocation);
+
+                if (plot == null) {
+                    this.plugin.getMessageCache().sendMessage(event.getPlayer(), "messages.cannot-interact");
+                    return;
+                }
+
+                if (!plot.getMembers().contains(event.getPlayer().getUniqueId()) && !plot.getOwners().contains(event.getPlayer().getUniqueId())) {
+                    this.plugin.getMessageCache().sendMessage(event.getPlayer(), "messages.cannot-interact");
+                    return;
+                }
             }
 
             final Generator generator = this.plugin.getGeneratorRegistry().get(generatorData.getGenerator()).get();

@@ -24,6 +24,26 @@ messages:
       value: "FIZZ"
       volume: 1
       pitch: 1
+  "cannot-interact":
+    message:
+      enabled: true
+      value:
+        - "&8[&c&lAlert&8] &cYou cannot interact with this generator."
+    sound:
+      enabled: true
+      value: "FIZZ"
+      volume: 1
+      pitch: 1
+  "cannot-place":
+    message:
+      enabled: true
+      value:
+        - "&8[&c&lAlert&8] &cYou cannot place a generator here."
+    sound:
+      enabled: true
+      value: "FIZZ"
+      volume: 1
+      pitch: 1
   "blacklisted-world":
     message:
       enabled: true
