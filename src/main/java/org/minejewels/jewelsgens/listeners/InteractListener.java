@@ -72,7 +72,7 @@ public class InteractListener extends AbyssListener<JewelsGens> {
                     return;
                 }
 
-                if (!plot.getMembers().contains(event.getPlayer().getUniqueId()) && !plot.getOwners().contains(event.getPlayer().getUniqueId())) {
+                if (!plot.getMembers().contains(event.getPlayer().getUniqueId()) && !plot.getOwners().contains(event.getPlayer().getUniqueId()) && !plot.getTrusted().contains(event.getPlayer().getUniqueId())) {
                     this.plugin.getMessageCache().sendMessage(event.getPlayer(), "messages.cannot-interact");
                     return;
                 }

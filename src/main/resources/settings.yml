@@ -1,6 +1,5 @@
-protection: "NONE" # SuperiorSkyblock, PlotSquared, Factions
-
 whitelisted-worlds:
+  - "Plots"
   - "world"
 
 timewarp-token:

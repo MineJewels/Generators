@@ -3,5 +3,6 @@ version: ${project.version}
 main: org.minejewels.jewelsgens.JewelsGens
 api-version: 1.19
 depend: [ AbyssLib, DecentHolograms, Vault ]
+softdepend: [ PlotSquared ]
 authors: [ Consciences ]
 description: Custom generator plugin!

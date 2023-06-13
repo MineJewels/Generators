@@ -87,7 +87,7 @@ public class PlaceListener extends AbyssListener<JewelsGens> {
                 return;
             }
 
-            if (!plot.getMembers().contains(event.getPlayer().getUniqueId()) && !plot.getOwners().contains(player.getUniqueId())) {
+            if (!plot.getMembers().contains(event.getPlayer().getUniqueId()) && !plot.getOwners().contains(player.getUniqueId()) && !plot.getTrusted().contains(player.getUniqueId())) {
                 this.plugin.getMessageCache().sendMessage(event.getPlayer(), "messages.cannot-place");
                 event.setCancelled(true);
                 return;
