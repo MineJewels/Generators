@@ -1,0 +1,14 @@
+protection: "NONE" # SuperiorSkyblock, PlotSquared, Factions
+
+whitelisted-worlds:
+  - "world"
+
+timewarp-token:
+  enchanted: true
+  material: "ENDER_EYE"
+  name: "&e&lTimewarp &6&lToken"
+  lore:
+    - "&7"
+    - "&e&lINFORMATION"
+    - "&6 * &eWarps your generator &n%time%&e minutes into the future!"
+    - "&7"

@@ -1,0 +1,13 @@
+org\minejewels\jewelsgens\commands\warptoken\subcommands\GiveTokenSubCommand.class
+org\minejewels\jewelsgens\gen\Generator.class
+org\minejewels\jewelsgens\gen\storage\GeneratorStorage.class
+org\minejewels\jewelsgens\JewelsGens.class
+org\minejewels\jewelsgens\gen\task\GeneratorTask.class
+org\minejewels\jewelsgens\listeners\PlaceListener.class
+org\minejewels\jewelsgens\gen\data\GeneratorData.class
+org\minejewels\jewelsgens\listeners\BreakListener.class
+org\minejewels\jewelsgens\gen\registry\GeneratorRegistry.class
+org\minejewels\jewelsgens\commands\warptoken\WarpTokenCommand.class
+org\minejewels\jewelsgens\commands\generator\GeneratorCommand.class
+org\minejewels\jewelsgens\listeners\InteractListener.class
+org\minejewels\jewelsgens\commands\generator\subcommands\GiveGeneratorSubCommand.class

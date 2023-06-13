@@ -1,0 +1,47 @@
+generator:
+  "DEEPSLATE_COAL_ORE":
+    upgrade:
+      enabled: true
+      value: "COAL_ORE"
+      cost: 100
+    generation-speed: 2 # Seconds
+    generation-quantity: 1
+    y-offset: 3
+    display-hologram:
+      - "&7"
+      - "&7"
+      - "#ICON: !ENCHANTED DEEPSLATE_COAL_ORE"
+      - "&e✯&7✯✯✯✯"
+      - "&f✧ #A1A1A1Deepslate Coal Ore Generator &f✧"
+    item:
+      enchanted: true
+      material: "DEEPSLATE_COAL_ORE"
+      name: "&bDeepslate Generator"
+      lore:
+        - "&7"
+        - "&bInformation"
+        - "&3 * &bTier: &fI"
+        - "&7"
+  "COAL_ORE":
+    upgrade:
+      enabled: false
+      value: ""
+      cost: 0
+    generation-speed: 5 # Seconds
+    generation-quantity: 1
+    y-offset: 3
+    display-hologram:
+      - "&7"
+      - "&7"
+      - "#ICON: !ENCHANTED COAL_ORE"
+      - "&e✯✯&7✯✯✯"
+      - "&a✧ &3Coal Ore Generator &a✧"
+    item:
+      enchanted: true
+      material: "COAL_ORE"
+      name: "&bCoal Generator"
+      lore:
+        - "&7"
+        - "&bInformation"
+        - "&3 * &bTier: &fII"
+        - "&7"

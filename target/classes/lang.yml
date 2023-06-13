@@ -1,0 +1,139 @@
+messages:
+  "player-doesnt-exist":
+    message:
+      enabled: true
+      value:
+        - "&8[&c&lAlert&8] &cThis player does not exist! If you think this is a error, send this message to a staff."
+  "generator-doesnt-exist":
+    message:
+      enabled: true
+      value:
+        - "&8[&c&lAlert&8] &cThe generator type &f%type% &cdoes not exist! If you think this is a error, send this message to a staff."
+    sound:
+      enabled: true
+      value: "FIZZ"
+      volume: 1
+      pitch: 1
+  "not-enough-money":
+    message:
+      enabled: true
+      value:
+        - "&8[&c&lAlert&8] &cYou need &n%cost%&c to purchase this."
+    sound:
+      enabled: true
+      value: "FIZZ"
+      volume: 1
+      pitch: 1
+  "blacklisted-world":
+    message:
+      enabled: true
+      value:
+        - "&8[&c&lAlert&8] &cGenerators cannot be placed in this world, they can only be placed at plots!"
+    sound:
+      enabled: true
+      value: "FIZZ"
+      volume: 1
+      pitch: 1
+  "generator-placed":
+    message:
+      enabled: true
+      value:
+        - "&8[&b&lAlert&8] &bYou have successfully placed a &3%type% &bgenerator!"
+    sound:
+      enabled: false
+      value: "FIZZ"
+      volume: 1
+      pitch: 1
+  "generator-broken":
+    message:
+      enabled: true
+      value:
+        - "&8[&b&lAlert&8] &bYou have successfully broken a &bgenerator!"
+    sound:
+      enabled: false
+      value: "FIZZ"
+      volume: 1
+      pitch: 1
+  "generator-given":
+    message:
+      enabled: true
+      value:
+        - "&8[&b&lAlert&8] &bYou have been given a &3%type% &bgenerator!"
+    sound:
+      enabled: false
+      value: "FIZZ"
+      volume: 1
+      pitch: 1
+  "generator-upgraded":
+    message:
+      enabled: true
+      value:
+        - "&8[&b&lAlert&8] &bYou have upgraded your generator to &n%upgrade%!"
+    sound:
+      enabled: false
+      value: "FIZZ"
+      volume: 1
+      pitch: 1
+  "generator-max-upgraded":
+    message:
+      enabled: true
+      value:
+        - "&8[&b&lAlert&8] &bThis generator cannot be upgraded anymore!"
+    sound:
+      enabled: false
+      value: "FIZZ"
+      volume: 1
+      pitch: 1
+  "timewarp-token-given":
+    message:
+      enabled: true
+      value:
+        - "&8[&b&lAlert&8] &bYou have been given a timewarp token for &3%time% &bminutes!"
+    sound:
+      enabled: false
+      value: "FIZZ"
+      volume: 1
+      pitch: 1
+  "used-token":
+    message:
+      enabled: true
+      value:
+        - "&8[&b&lAlert&8] &bYou have used your timewarp token and have received &3%amount% &bgenerated items!"
+    sound:
+      enabled: false
+      value: "FIZZ"
+      volume: 1
+      pitch: 1
+  "no-permission":
+    message:
+      enabled: true
+      value:
+        - "&8[&c&lAlert&8] &cYou do not have &4permission &cto execute this!"
+    sound:
+      enabled: true
+      value: "FIZZ"
+      volume: 1
+      pitch: 1
+  "invalid-number":
+    message:
+      enabled: true
+      value:
+        - "&8[&c&lAlert&8] &cYou have entered an invalid number!"
+    sound:
+      enabled: true
+      value: "FIZZ"
+      volume: 1
+      pitch: 1
+  "help":
+    message:
+      enabled: true
+      value:
+        - "#ae5bb9M#ab58bdi#a856c1n#a453c6e#a150caJ#9e4ecee#9b4bd2w#9748d7e#9446dbl#9143dfs &8| #ae5bb9H#a453c6e#9b4bd2l#9143dfp"
+        - "&7"
+        - "#AE5BB9✧ #9143DF/generators give &f{player} {type}"
+        - "#AE5BB9✧ #9143DF/warptoken give &f{player} {time}"
+    sound:
+      enabled: true
+      value: "FIZZ"
+      volume: 1
+      pitch: 1
