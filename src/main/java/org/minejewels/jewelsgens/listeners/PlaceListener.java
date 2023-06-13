@@ -4,9 +4,11 @@ import net.abyssdev.abysslib.listener.AbyssListener;
 import net.abyssdev.abysslib.location.LocationSerializer;
 import net.abyssdev.abysslib.nbt.NBTUtils;
 import net.abyssdev.abysslib.placeholder.PlaceholderReplacer;
+import net.abyssdev.abysslib.plotsquared.PlotSquaredUtils;
 import net.abyssdev.abysslib.team.utils.TeamUtils;
 import net.abyssdev.abysslib.utils.Utils;
 import net.abyssdev.abysslib.utils.WordUtils;
+import net.abyssdev.plotsquared.IPlotSquared;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -36,6 +38,8 @@ public class PlaceListener extends AbyssListener<JewelsGens> {
 
         final Player player = event.getPlayer();
         final ItemStack item = event.getItemInHand();
+
+        if (event.isCancelled()) return;
 
         if (!NBTUtils.get().contains(item, "GENERATOR")) return;
 
