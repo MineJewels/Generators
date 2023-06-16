@@ -52,3 +52,11 @@ generator:
         - "&bInformation"
         - "&3 * &bTier: &fII"
         - "&7"
+    generated-item:
+      amount: 1
+      item:
+        material: "COAL_ORE"
+        enchanted: true
+        name: "&bCoal Ore"
+        lore:
+          - "&7Cool"

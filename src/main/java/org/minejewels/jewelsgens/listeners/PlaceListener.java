@@ -98,14 +98,13 @@ public class PlaceListener extends AbyssListener<JewelsGens> {
         }
 
         final Generator generator = this.plugin.getGeneratorRegistry().get(generatorType).get();
+        final GeneratorData generatorData = new GeneratorData(UUID.randomUUID(), LocationSerializer.serialize(location));
 
-        final GeneratorPlaceEvent placeEvent = new GeneratorPlaceEvent(player, location, generator);
+        final GeneratorPlaceEvent placeEvent = new GeneratorPlaceEvent(player, location, generator, generatorData);
 
         Events.call(placeEvent);
 
         if (placeEvent.isCancelled()) return;
-
-        final GeneratorData generatorData = new GeneratorData(UUID.randomUUID(), LocationSerializer.serialize(location));
 
         generatorData.setGenerator(generatorType);
         generatorData.setTask(new GeneratorTask(this.plugin, generatorData));

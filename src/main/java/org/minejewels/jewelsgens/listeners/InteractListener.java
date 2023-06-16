@@ -181,7 +181,7 @@ public class InteractListener extends AbyssListener<JewelsGens> {
         if (player.isSneaking()) return;
         if (player.getItemInHand().getType() != Material.AIR) return;
 
-        final GeneratorBreakEvent breakEvent = new GeneratorBreakEvent(player, LocationSerializer.deserialize(data.getLocation()), generator);
+        final GeneratorBreakEvent breakEvent = new GeneratorBreakEvent(player, LocationSerializer.deserialize(data.getLocation()), generator, data);
 
         Events.call(breakEvent);
 
