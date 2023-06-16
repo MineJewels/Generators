@@ -1,6 +1,7 @@
 package org.minejewels.jewelsgens.gen.task;
 
 import net.abyssdev.abysslib.location.LocationSerializer;
+import net.abyssdev.abysslib.nbt.NBTUtils;
 import net.abyssdev.abysslib.runnable.AbyssTask;
 import net.abyssdev.me.lucko.helper.Events;
 import org.bukkit.Location;
@@ -42,7 +43,7 @@ public class GeneratorTask extends AbyssTask<JewelsGens> {
 
         if (generateEvent.isCancelled()) return;
 
-        final ItemStack dropItem = this.generator.getGeneratedItem().getItem();
+        final ItemStack dropItem = NBTUtils.get().setString(this.generator.getGeneratedItem().getItem(), "GENERATOR-LOOT", generator.getIdentifier().toUpperCase());
 
         dropItem.setAmount(this.generator.getGeneratedItem().getAmount());
 
