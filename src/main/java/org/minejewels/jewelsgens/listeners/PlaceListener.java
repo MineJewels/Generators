@@ -104,7 +104,10 @@ public class PlaceListener extends AbyssListener<JewelsGens> {
 
         Events.call(placeEvent);
 
-        if (placeEvent.isCancelled()) return;
+        if (placeEvent.isCancelled()) {
+            event.setCancelled(true);
+            return;
+        }
 
         generatorData.setGenerator(generatorType);
         generatorData.setTask(new GeneratorTask(this.plugin, generatorData));

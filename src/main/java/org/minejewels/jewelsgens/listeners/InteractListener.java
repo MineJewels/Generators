@@ -187,7 +187,6 @@ public class InteractListener extends AbyssListener<JewelsGens> {
 
         if (breakEvent.isCancelled()) return;
 
-
         generator.despawnGenerator(data);
 
         this.plugin.getGeneratorStorage().remove(data.getUuid());
