@@ -51,6 +51,11 @@ public class GiveTokenSubCommand extends AbyssSubCommand<JewelsGens> {
 
         final int minutes = context.asInt(1);
 
+        if (minutes <= 0) {
+            this.plugin.getMessageCache().sendMessage(sender, "messages.invalid-number");
+            return;
+        }
+
         final PlaceholderReplacer replacer = new PlaceholderReplacer().addPlaceholder("%time%", Utils.format(minutes));
 
         final ItemStack item = NBTUtils.get().setString(

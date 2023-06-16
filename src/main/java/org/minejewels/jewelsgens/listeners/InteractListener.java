@@ -14,15 +14,20 @@ import net.abyssdev.abysslib.plotsquared.PlotSquaredUtils;
 import net.abyssdev.abysslib.team.utils.TeamUtils;
 import net.abyssdev.abysslib.utils.Utils;
 import net.abyssdev.abysslib.utils.WordUtils;
+import net.abyssdev.me.lucko.helper.Events;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.minejewels.jewelsgens.JewelsGens;
+import org.minejewels.jewelsgens.events.GeneratorBreakEvent;
+import org.minejewels.jewelsgens.events.GeneratorUpgradeEvent;
+import org.minejewels.jewelsgens.events.TimewarpEvent;
 import org.minejewels.jewelsgens.gen.Generator;
 import org.minejewels.jewelsgens.gen.data.GeneratorData;
 import org.minejewels.jewelsgens.gen.task.GeneratorTask;
@@ -102,15 +107,21 @@ public class InteractListener extends AbyssListener<JewelsGens> {
 
         final int minutes = Integer.parseInt(NBTUtils.get().getString(item, "TIMEWARP_TOKEN"));
 
+        final TimewarpEvent timewarpEvent = new TimewarpEvent(player, minutes, generator);
+
+        Events.call(timewarpEvent);
+
+        if (timewarpEvent.isCancelled()) return;
+
         final int seconds = minutes * 60;
         final int procTimes = seconds/generator.getGenerationSpeed();
 
-        final int procAmount = procTimes * generator.getGenerationQuantity();
+        final int procAmount = procTimes * generator.getGeneratedItem().getAmount();
 
         Utils.removeItemsFromHand(player, 1, true);
 
         final Location dropLocation = LocationSerializer.deserialize(data.getLocation()).add(0, 1, 0);
-        final ItemStack dropItem = new ItemStack(Material.getMaterial(generator.getIdentifier().toUpperCase()));
+        final ItemStack dropItem = generator.getGeneratedItem().getItem();
 
         dropItem.setAmount(procAmount);
 
@@ -139,6 +150,12 @@ public class InteractListener extends AbyssListener<JewelsGens> {
             return;
         }
 
+        final GeneratorUpgradeEvent upgradeEvent = new GeneratorUpgradeEvent(player, LocationSerializer.deserialize(data.getLocation()), generator, generator);
+
+        Events.call(upgradeEvent);
+
+        if (upgradeEvent.isCancelled()) return;
+
         economy.withdrawBalance(player, generator.getUpgradeCost());
 
         final Generator newGenerator = this.plugin.getGeneratorRegistry().get(generator.getUpgradeValue()).get();
@@ -163,6 +180,13 @@ public class InteractListener extends AbyssListener<JewelsGens> {
 
         if (player.isSneaking()) return;
         if (player.getItemInHand().getType() != Material.AIR) return;
+
+        final GeneratorBreakEvent breakEvent = new GeneratorBreakEvent(player, LocationSerializer.deserialize(data.getLocation()), generator);
+
+        Events.call(breakEvent);
+
+        if (breakEvent.isCancelled()) return;
+
 
         generator.despawnGenerator(data);
 

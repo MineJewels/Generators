@@ -78,7 +78,7 @@ messages:
     message:
       enabled: true
       value:
-        - "&8[&b&lAlert&8] &bYou have been given a &3%type% &bgenerator!"
+        - "&8[&b&lAlert&8] &bYou have been given &3&n%amount%&b &3%type% &bgenerators!"
     sound:
       enabled: false
       value: "FIZZ"
@@ -150,7 +150,7 @@ messages:
       value:
         - "#ae5bb9M#ab58bdi#a856c1n#a453c6e#a150caJ#9e4ecee#9b4bd2w#9748d7e#9446dbl#9143dfs &8| #ae5bb9H#a453c6e#9b4bd2l#9143dfp"
         - "&7"
-        - "#AE5BB9✧ #9143DF/generators give &f{player} {type}"
+        - "#AE5BB9✧ #9143DF/generators give &f{player} {type} {amount}"
         - "#AE5BB9✧ #9143DF/warptoken give &f{player} {time}"
     sound:
       enabled: true

@@ -10,6 +10,7 @@ import net.abyssdev.abysslib.plotsquared.PlotSquaredUtils;
 import net.abyssdev.abysslib.team.utils.TeamUtils;
 import net.abyssdev.abysslib.utils.Utils;
 import net.abyssdev.abysslib.utils.WordUtils;
+import net.abyssdev.me.lucko.helper.Events;
 import net.abyssdev.plotsquared.IPlotSquared;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -19,6 +20,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.minejewels.jewelsgens.JewelsGens;
+import org.minejewels.jewelsgens.events.GeneratorBreakEvent;
+import org.minejewels.jewelsgens.events.GeneratorPlaceEvent;
 import org.minejewels.jewelsgens.gen.Generator;
 import org.minejewels.jewelsgens.gen.data.GeneratorData;
 import org.minejewels.jewelsgens.gen.task.GeneratorTask;
@@ -94,9 +97,14 @@ public class PlaceListener extends AbyssListener<JewelsGens> {
             }
         }
 
-        this.plugin.getMessageCache().sendMessage(player, "messages.generator-placed", new PlaceholderReplacer().addPlaceholder("%type%", WordUtils.formatText(generatorType.toLowerCase().replace("_", " "))));
-
         final Generator generator = this.plugin.getGeneratorRegistry().get(generatorType).get();
+
+        final GeneratorPlaceEvent placeEvent = new GeneratorPlaceEvent(player, location, generator);
+
+        Events.call(placeEvent);
+
+        if (placeEvent.isCancelled()) return;
+
         final GeneratorData generatorData = new GeneratorData(UUID.randomUUID(), LocationSerializer.serialize(location));
 
         generatorData.setGenerator(generatorType);
@@ -105,5 +113,7 @@ public class PlaceListener extends AbyssListener<JewelsGens> {
         generator.spawnGenerator(generatorData);
 
         this.plugin.getGeneratorStorage().cache().register(generatorData.getUuid(), generatorData);
+
+        this.plugin.getMessageCache().sendMessage(player, "messages.generator-placed", new PlaceholderReplacer().addPlaceholder("%type%", WordUtils.formatText(generatorType.toLowerCase().replace("_", " "))));
     }
 }

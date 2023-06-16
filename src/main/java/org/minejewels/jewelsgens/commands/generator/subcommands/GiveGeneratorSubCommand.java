@@ -54,6 +54,11 @@ public class GiveGeneratorSubCommand extends AbyssSubCommand<JewelsGens> {
 
         final int amount = context.asInt(2);
 
+        if (amount <= 0) {
+            this.plugin.getMessageCache().sendMessage(sender, "messages.invalid-number");
+            return;
+        }
+
         final ItemStack item = generator.getItem();
 
         item.setAmount(amount);

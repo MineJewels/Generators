@@ -78,7 +78,7 @@ messages:
     message:
       enabled: true
       value:
-        - "&8[&b&lAlert&8] &bYou have been given %3&n%amount%&b &3%type% &bgenerators!"
+        - "&8[&b&lAlert&8] &bYou have been given &3&n%amount%&b &3%type% &bgenerators!"
     sound:
       enabled: false
       value: "FIZZ"

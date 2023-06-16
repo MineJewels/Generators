@@ -9,6 +9,7 @@ import net.abyssdev.abysslib.nbt.NBTUtils;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 import org.minejewels.jewelsgens.gen.data.GeneratorData;
+import org.minejewels.jewelsgens.gen.item.GeneratorItem;
 
 import java.util.List;
 
@@ -19,22 +20,26 @@ public class Generator {
     private final boolean upgradeEnabled;
     private String upgradeValue;
     private int upgradeCost;
-    private final int generationQuantity, generationSpeed;
+    private final int generationSpeed;
     private final double yOffset;
     private final List<String> hologram;
     private final ItemStack item;
+    private final GeneratorItem generatedItem;
 
     public Generator(final AbyssConfig config, final String identifier) {
         this.identifier = identifier;
         this.upgradeEnabled = config.getBoolean("generator." + identifier + ".upgrade.enabled");
         this.generationSpeed = config.getInt("generator." + identifier + ".generation-speed");
-        this.generationQuantity = config.getInt("generator." + identifier + ".generation-quantity");
         this.yOffset = config.getInt("generator." + identifier + ".y-offset");
         this.hologram = config.getColoredStringList("generator." + identifier + ".display-hologram");
         this.item = NBTUtils.get().setString(
                 config.getItemBuilder("generator." + identifier + ".item").parse(),
                 "GENERATOR",
                 identifier.toUpperCase()
+        );
+        this.generatedItem = new GeneratorItem(
+                config.getItemStack("generator." + identifier + ".generated-item.item"),
+                config.getInt("generator." + identifier + ".generated-item.amount")
         );
 
         if (this.upgradeEnabled) {

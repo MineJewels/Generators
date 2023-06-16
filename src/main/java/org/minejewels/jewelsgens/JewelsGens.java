@@ -5,6 +5,7 @@ import lombok.Getter;
 import net.abyssdev.abysslib.command.AbyssCommand;
 import net.abyssdev.abysslib.config.AbyssConfig;
 import net.abyssdev.abysslib.location.LocationSerializer;
+import net.abyssdev.abysslib.nbt.NBTUtils;
 import net.abyssdev.abysslib.patterns.registry.Registry;
 import net.abyssdev.abysslib.plugin.AbyssPlugin;
 import net.abyssdev.abysslib.runnable.AbyssTask;
