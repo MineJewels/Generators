@@ -14,6 +14,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.minejewels.jewelsgens.JewelsGens;
 import org.minejewels.jewelsgens.events.GeneratorBreakEvent;
@@ -36,6 +37,7 @@ public class InteractListener extends AbyssListener<JewelsGens> {
     @EventHandler
     public void onInteract(final RealmInteractEvent event) {
 
+        if(event.getEvent().getHand() != EquipmentSlot.HAND) return;
         if (event.getEvent().getClickedBlock() == null) return;
 
         final Location location = event.getEvent().getClickedBlock().getLocation();
@@ -139,11 +141,10 @@ public class InteractListener extends AbyssListener<JewelsGens> {
     }
 
     private void attemptBreak(final RealmInteractEvent event, final Generator generator, final GeneratorData data) {
-        if (event.getEvent().getAction() != Action.RIGHT_CLICK_BLOCK) return;
+        if (event.getEvent().getAction() != Action.LEFT_CLICK_BLOCK) return;
 
         final Player player = event.getPlayer();
 
-        if (player.isSneaking()) return;
         if (player.getItemInHand().getType() != Material.AIR) return;
 
         final GeneratorBreakEvent breakEvent = new GeneratorBreakEvent(player, LocationSerializer.deserialize(data.getLocation()), generator, data);
