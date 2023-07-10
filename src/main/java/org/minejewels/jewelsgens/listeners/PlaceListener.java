@@ -1,49 +1,43 @@
 package org.minejewels.jewelsgens.listeners;
 
-import com.plotsquared.core.PlotSquared;
-import com.plotsquared.core.plot.Plot;
 import net.abyssdev.abysslib.listener.AbyssListener;
 import net.abyssdev.abysslib.location.LocationSerializer;
 import net.abyssdev.abysslib.nbt.NBTUtils;
 import net.abyssdev.abysslib.placeholder.PlaceholderReplacer;
-import net.abyssdev.abysslib.plotsquared.PlotSquaredUtils;
-import net.abyssdev.abysslib.team.utils.TeamUtils;
 import net.abyssdev.abysslib.utils.Utils;
 import net.abyssdev.abysslib.utils.WordUtils;
 import net.abyssdev.me.lucko.helper.Events;
-import net.abyssdev.plotsquared.IPlotSquared;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.minejewels.jewelsgens.JewelsGens;
-import org.minejewels.jewelsgens.events.GeneratorBreakEvent;
 import org.minejewels.jewelsgens.events.GeneratorPlaceEvent;
 import org.minejewels.jewelsgens.gen.Generator;
 import org.minejewels.jewelsgens.gen.data.GeneratorData;
 import org.minejewels.jewelsgens.gen.task.GeneratorTask;
+import org.minejewels.jewelsrealms.JewelsRealms;
+import org.minejewels.jewelsrealms.events.RealmPlaceEvent;
+import org.minejewels.jewelsrealms.permission.RealmPermission;
 
 import java.util.List;
 import java.util.UUID;
 
 public class PlaceListener extends AbyssListener<JewelsGens> {
 
-    private final List<String> worlds;
+    private final JewelsRealms realms;
 
     public PlaceListener(final JewelsGens plugin) {
         super(plugin);
-
-        this.worlds = plugin.getSettingsConfig().getStringList("whitelisted-worlds");
+        this.realms = JewelsRealms.get();
     }
 
     @EventHandler
-    public void onPlace(final BlockPlaceEvent event) {
+    public void onPlace(final RealmPlaceEvent event) {
 
         final Player player = event.getPlayer();
-        final ItemStack item = event.getItemInHand();
+        final ItemStack item = event.getEvent().getItemInHand();
 
         if (event.isCancelled()) return;
 
@@ -58,44 +52,8 @@ public class PlaceListener extends AbyssListener<JewelsGens> {
             return;
         }
 
-        final Block block = event.getBlockPlaced();
+        final Block block = event.getEvent().getBlockPlaced();
         final Location location = block.getLocation();
-
-        if (!TeamUtils.get().canPlace(player, location)) {
-            this.plugin.getMessageCache().sendMessage(event.getPlayer(), "messages.cannot-place");
-            return;
-        }
-
-        if (!this.worlds.contains(location.getWorld().getName())) {
-            this.plugin.getMessageCache().sendMessage(player, "messages.blacklisted-world");
-            event.setCancelled(true);
-            return;
-        }
-
-        if (Bukkit.getPluginManager().getPlugin("PlotSquared") != null) {
-
-            final com.plotsquared.core.location.Location plotLocation = com.plotsquared.core.location.Location.at(location.getWorld().getName(), location.getBlockX(), location.getBlockY(), location.getBlockZ());
-
-            if (PlotSquared.get().getPlotAreaManager().getApplicablePlotArea(plotLocation).getPlot(plotLocation) == null) {
-                this.plugin.getMessageCache().sendMessage(event.getPlayer(), "messages.cannot-place");
-                event.setCancelled(true);
-                return;
-            }
-
-            final Plot plot = PlotSquared.get().getPlotAreaManager().getApplicablePlotArea(plotLocation).getPlot(plotLocation);
-
-            if (plot == null) {
-                this.plugin.getMessageCache().sendMessage(event.getPlayer(), "messages.cannot-place");
-                event.setCancelled(true);
-                return;
-            }
-
-            if (!plot.getMembers().contains(event.getPlayer().getUniqueId()) && !plot.getOwners().contains(player.getUniqueId()) && !plot.getTrusted().contains(player.getUniqueId())) {
-                this.plugin.getMessageCache().sendMessage(event.getPlayer(), "messages.cannot-place");
-                event.setCancelled(true);
-                return;
-            }
-        }
 
         final Generator generator = this.plugin.getGeneratorRegistry().get(generatorType).get();
         final GeneratorData generatorData = new GeneratorData(UUID.randomUUID(), LocationSerializer.serialize(location));

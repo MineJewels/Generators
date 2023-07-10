@@ -78,36 +78,23 @@
         <dependency>
             <groupId>me.gabrielv</groupId>
             <artifactId>abysslib</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.1</version>
             <scope>system</scope>
             <systemPath>${basedir}/libs/AbyssLib.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>me.gabrielv</groupId>
             <artifactId>decentholograms</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.1</version>
             <scope>system</scope>
             <systemPath>${basedir}/libs/DecentHolograms.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>com.plotsquared</groupId>
-            <artifactId>PlotSquared-Core</artifactId>
-            <version>6.11.1</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>me.gabrielv</groupId>
-            <artifactId>plotsquared</artifactId>
+            <artifactId>jewelsrealms</artifactId>
             <version>1.0.0</version>
             <scope>system</scope>
-            <systemPath>${basedir}/libs/FastAsyncWorldEdit-Bukkit-2.6.4-SNAPSHOT-480.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>me.gabrielv</groupId>
-            <artifactId>placeholder-api</artifactId>
-            <version>1.0.0</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/libs/PlaceholderAPI.jar</systemPath>
+            <systemPath>${basedir}/libs/JewelsRealms.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>

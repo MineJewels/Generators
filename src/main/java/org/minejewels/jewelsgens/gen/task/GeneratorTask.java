@@ -12,17 +12,20 @@ import org.minejewels.jewelsgens.events.GeneratorItemGenerateEvent;
 import org.minejewels.jewelsgens.events.GeneratorPlaceEvent;
 import org.minejewels.jewelsgens.gen.Generator;
 import org.minejewels.jewelsgens.gen.data.GeneratorData;
+import org.minejewels.jewelsrealms.JewelsRealms;
 
 public class GeneratorTask extends AbyssTask<JewelsGens> {
 
     private final GeneratorData generatorData;
     private final Generator generator;
+    private final JewelsRealms realms;
 
     public GeneratorTask(final JewelsGens plugin, final GeneratorData generatorData) {
         super(plugin);
 
         this.generatorData = generatorData;
         this.generator = plugin.getGeneratorRegistry().get(generatorData.getGenerator()).get();
+        this.realms = JewelsRealms.get();
 
         this.runTaskTimer(plugin, 20L, generator.getGenerationSpeed() * 20L);
     }
@@ -36,6 +39,14 @@ public class GeneratorTask extends AbyssTask<JewelsGens> {
         }
 
         final Location location = LocationSerializer.deserialize(this.generatorData.getLocation()).add(0, 1, 0);
+
+        if (this.realms.getRealmUtils().getRealm(location.getWorld()) == null) {
+            this.plugin.getGeneratorStorage().remove(this.generatorData.getUuid());
+            this.cancel();
+            return;
+        }
+
+        if (this.realms.getRealmUtils().getMembersOnRealm(this.realms.getRealmUtils().getRealm(location.getWorld())).isEmpty()) return;
 
         final GeneratorItemGenerateEvent generateEvent = new GeneratorItemGenerateEvent(location, generator, generator.getGeneratedItem());
 

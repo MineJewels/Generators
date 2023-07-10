@@ -9,8 +9,5 @@
         <module name="JewelsGens" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="JewelsGens" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
 </project>

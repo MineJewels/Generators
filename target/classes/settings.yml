@@ -1,7 +1,3 @@
-whitelisted-worlds:
-  - "Plots"
-  - "world"
-
 timewarp-token:
   enchanted: true
   material: "ENDER_EYE"

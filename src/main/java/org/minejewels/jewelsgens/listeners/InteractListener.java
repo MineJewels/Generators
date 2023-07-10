@@ -1,28 +1,19 @@
 package org.minejewels.jewelsgens.listeners;
 
-import com.plotsquared.core.PlotSquared;
-import com.plotsquared.core.plot.Plot;
-import com.plotsquared.core.plot.PlotArea;
-import com.sun.tools.javac.jvm.Gen;
 import net.abyssdev.abysslib.economy.provider.Economy;
 import net.abyssdev.abysslib.economy.registry.impl.DefaultEconomyRegistry;
 import net.abyssdev.abysslib.listener.AbyssListener;
 import net.abyssdev.abysslib.location.LocationSerializer;
 import net.abyssdev.abysslib.nbt.NBTUtils;
 import net.abyssdev.abysslib.placeholder.PlaceholderReplacer;
-import net.abyssdev.abysslib.plotsquared.PlotSquaredUtils;
-import net.abyssdev.abysslib.team.utils.TeamUtils;
 import net.abyssdev.abysslib.utils.Utils;
 import net.abyssdev.abysslib.utils.WordUtils;
 import net.abyssdev.me.lucko.helper.Events;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.minejewels.jewelsgens.JewelsGens;
 import org.minejewels.jewelsgens.events.GeneratorBreakEvent;
@@ -31,6 +22,7 @@ import org.minejewels.jewelsgens.events.TimewarpEvent;
 import org.minejewels.jewelsgens.gen.Generator;
 import org.minejewels.jewelsgens.gen.data.GeneratorData;
 import org.minejewels.jewelsgens.gen.task.GeneratorTask;
+import org.minejewels.jewelsrealms.events.RealmInteractEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,11 +34,11 @@ public class InteractListener extends AbyssListener<JewelsGens> {
     }
 
     @EventHandler
-    public void onInteract(final PlayerInteractEvent event) {
+    public void onInteract(final RealmInteractEvent event) {
 
-        if (event.getClickedBlock() == null) return;
+        if (event.getEvent().getClickedBlock() == null) return;
 
-        final Location location = event.getClickedBlock().getLocation();
+        final Location location = event.getEvent().getClickedBlock().getLocation();
 
         if (this.plugin.getGeneratorStorage().allValues().isEmpty()) return;
 
@@ -55,33 +47,6 @@ public class InteractListener extends AbyssListener<JewelsGens> {
         for (final GeneratorData generatorData : generatorDataList) {
             if (!generatorData.getLocation().equalsIgnoreCase(LocationSerializer.serialize(location))) continue;
             if (!this.plugin.getGeneratorRegistry().containsKey(generatorData.getGenerator())) continue;
-
-            if (!TeamUtils.get().canInteract(event.getPlayer(), location)) {
-                this.plugin.getMessageCache().sendMessage(event.getPlayer(), "messages.cannot-interact");
-                return;
-            }
-
-            if (Bukkit.getPluginManager().getPlugin("PlotSquared") != null) {
-
-                final com.plotsquared.core.location.Location plotLocation = com.plotsquared.core.location.Location.at(location.getWorld().getName(), location.getBlockX(), location.getBlockY(), location.getBlockZ());
-
-                if (PlotSquared.get().getPlotAreaManager().getApplicablePlotArea(plotLocation).getPlot(plotLocation) == null) {
-                    this.plugin.getMessageCache().sendMessage(event.getPlayer(), "messages.cannot-interact");
-                    return;
-                }
-
-                final Plot plot = PlotSquared.get().getPlotAreaManager().getApplicablePlotArea(plotLocation).getPlot(plotLocation);
-
-                if (plot == null) {
-                    this.plugin.getMessageCache().sendMessage(event.getPlayer(), "messages.cannot-interact");
-                    return;
-                }
-
-                if (!plot.getMembers().contains(event.getPlayer().getUniqueId()) && !plot.getOwners().contains(event.getPlayer().getUniqueId()) && !plot.getTrusted().contains(event.getPlayer().getUniqueId())) {
-                    this.plugin.getMessageCache().sendMessage(event.getPlayer(), "messages.cannot-interact");
-                    return;
-                }
-            }
 
             final Generator generator = this.plugin.getGeneratorRegistry().get(generatorData.getGenerator()).get();
 
@@ -93,9 +58,9 @@ public class InteractListener extends AbyssListener<JewelsGens> {
         }
     }
 
-    private void attemptToken(final PlayerInteractEvent event, final Generator generator, final GeneratorData data) {
+    private void attemptToken(final RealmInteractEvent event, final Generator generator, final GeneratorData data) {
 
-        if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
+        if (event.getEvent().getAction() != Action.RIGHT_CLICK_BLOCK) return;
 
         final Player player = event.getPlayer();
 
@@ -130,9 +95,9 @@ public class InteractListener extends AbyssListener<JewelsGens> {
         this.plugin.getMessageCache().sendMessage(player, "messages.used-token", new PlaceholderReplacer().addPlaceholder("%amount%", Utils.format(procAmount)));
     }
 
-    private void attemptUpgrade(final PlayerInteractEvent event, final Generator generator, final GeneratorData data) {
+    private void attemptUpgrade(final RealmInteractEvent event, final Generator generator, final GeneratorData data) {
 
-        if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
+        if (event.getEvent().getAction() != Action.RIGHT_CLICK_BLOCK) return;
 
         final Player player = event.getPlayer();
 
@@ -173,8 +138,8 @@ public class InteractListener extends AbyssListener<JewelsGens> {
         this.plugin.getMessageCache().sendMessage(player, "messages.generator-upgraded", new PlaceholderReplacer().addPlaceholder("%upgrade%", WordUtils.formatText(newGenerator.getIdentifier().replace("_", " "))));
     }
 
-    private void attemptBreak(final PlayerInteractEvent event, final Generator generator, final GeneratorData data) {
-        if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
+    private void attemptBreak(final RealmInteractEvent event, final Generator generator, final GeneratorData data) {
+        if (event.getEvent().getAction() != Action.RIGHT_CLICK_BLOCK) return;
 
         final Player player = event.getPlayer();
 
